@@ -14,18 +14,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
  */
 
-import util.MessagesPrinter
-import filesystem.FilesRenamer
-import kotlin.system.exitProcess
+package util
 
-fun main() {
-    MessagesPrinter.printProgramHeader()
-    MessagesPrinter.printPromptUserMessage()
+fun buildPrefixWith(randomNumber: Int) = "$randomNumber -"
 
-    readLine()?.let { userInput ->
-        if (userInput == "No")
-            exitProcess(1)
-        else
-            FilesRenamer.forDirectoryAt(userInput).also { it.start() }
+fun String.getPrefixBeforeBackspace() = this.split(" ")[0]
+
+fun String.containsHyphen() = this.contains("-")
+
+fun String.containsNumbers(): Boolean {
+    var containsNumbers = false
+
+    this.toCharArray().forEach { char ->
+        if (char.isDigit())
+            containsNumbers = true
     }
+
+    return containsNumbers
 }

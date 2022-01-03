@@ -14,18 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
  */
 
-import util.MessagesPrinter
-import filesystem.FilesRenamer
-import kotlin.system.exitProcess
+package filesystem.directoryfilesmanager
 
-fun main() {
-    MessagesPrinter.printProgramHeader()
-    MessagesPrinter.printPromptUserMessage()
-
-    readLine()?.let { userInput ->
-        if (userInput == "No")
-            exitProcess(1)
-        else
-            FilesRenamer.forDirectoryAt(userInput).also { it.start() }
-    }
+sealed class RenameFileResult {
+    data class FileRenamedSuccessfully(val fileName: String) : RenameFileResult()
+    data class RenameFileFailed(val fileName: String) : RenameFileResult()
 }

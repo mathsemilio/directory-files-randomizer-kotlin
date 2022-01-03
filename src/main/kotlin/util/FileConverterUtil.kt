@@ -14,18 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
  */
 
-import util.MessagesPrinter
-import filesystem.FilesRenamer
-import kotlin.system.exitProcess
+package util
 
-fun main() {
-    MessagesPrinter.printProgramHeader()
-    MessagesPrinter.printPromptUserMessage()
+import domain.model.DirectoryFile
+import java.io.File
 
-    readLine()?.let { userInput ->
-        if (userInput == "No")
-            exitProcess(1)
-        else
-            FilesRenamer.forDirectoryAt(userInput).also { it.start() }
+fun Array<File>.toDirectoryFiles(): List<DirectoryFile> {
+    val directoryFiles = mutableListOf<DirectoryFile>()
+
+    this.forEach { file ->
+        if (file.isFile)
+            directoryFiles.add(DirectoryFile(file.name, file.path))
     }
+
+    return directoryFiles
 }
+
+fun DirectoryFile.toFile() = File(this.path)
