@@ -1,7 +1,17 @@
-fun main(args: Array<String>) {
-    println("Hello World!")
+import filesystem.FilesRenamer
+import util.MessagesPrinter
+import kotlin.system.exitProcess
 
-    // Try adding program arguments via Run/Debug configuration.
-    // Learn more about running applications: https://www.jetbrains.com/help/idea/running-applications.html.
-    println("Program arguments: ${args.joinToString()}")
+fun main(args: Array<String>) {
+    MessagesPrinter.printProgramHeader()
+    MessagesPrinter.printPromptUserMessage()
+
+    readLine()?.let { userInput ->
+        if (userInput == "No") {
+            exitProcess(1)
+        } else {
+            val filesRenamer = FilesRenamer()
+            filesRenamer.start()
+        }
+    }
 }
